@@ -9,7 +9,7 @@ import datetime
 
 
 #criar conexão com bancdo de dados diretamente na banco de dados biblioteca
-def create_db_connection(host_name, user_name, user_password, database = "biblioteca"):
+def create_db_connection( user_name, user_password,host_name = 'localhost', database = 'biblioteca'):
     connection = None
     try:
     connection = mysql.connector.connect(
