@@ -45,9 +45,9 @@ while exit == False:
                         null = "NULL"
 
                     if column == 1 and int(columns) == 1:
-                        append_db_structure = (f'CREATE TABLE {col_name} (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,{col_name } {data_type}{data_size} {null})')
+                        append_db_structure = (f'CREATE TABLE {db_name} (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,{col_name } {data_type}{data_size} {null})')
                     elif column == 1:
-                        append_db_structure = (f'CREATE TABLE {col_name} (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,{col_name } {data_type}{data_size} {null}, ')
+                        append_db_structure = (f'CREATE TABLE {db_name} (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,{col_name } {data_type}{data_size} {null}, ')
                     elif column == int(columns):
                         append_db_structure = (f'{col_name} {data_type}{data_size} {null});')
                     else:
