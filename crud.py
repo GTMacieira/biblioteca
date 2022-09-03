@@ -4,28 +4,30 @@ from tkinter import INSERT
 #https://irias.com.br/blog/python-mysql-criando-um-crud-completo/
 
 import mysql.connector
-from mysql.connectot import Error
+from mysql.connector import Error
 import datetime
+import sys
 
 
 #criar conexão com bancdo de dados diretamente na banco de dados biblioteca
-def create_db_connection( user_name, user_password,host_name = 'localhost', database = 'biblioteca'):
+def create_db_connection( user_name, user_password,host_name = 'localhost', database = 'biblioteca', port = 3306):
     connection = None
     try:
-    connection = mysql.connector.connect(
+        connection = mysql.connector.connect(
         host = host_name,
         user = user_name,
-        password = user_password,
-        database = database
-    )
-    print(f"Olá, {user_name}, seja bem vindo!")
+        #password = user_password,
+        database = database,
+        port =  port
+        )
     except Error as err:
-        print('Não foi possivel criar uma conexão com o banco de dados, iformado erro: {err}')
+        print(f'Não foi possivel criar uma conexão com o banco de dados, iformado erro: {err}')
+        sys.exit()
     
     return connection
         
 def execute_query(connection,query,query_type):
-    cursor = connection.cursor
+    cursor = connection.cursor()
     try:
         if query_type == "INSERT" or query_type == "DELETE" or query_type == "UPDATE":
             cursor.execute(query)
@@ -40,6 +42,9 @@ def execute_query(connection,query,query_type):
             
     except Error as err:
         print(f'Não foi possível executar a ação, iformado erro: {err}') 
+        cursor.close()
+        connection.close()
+        sys.exit()
                
     cursor.close()
     connection.close()
