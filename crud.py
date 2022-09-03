@@ -10,7 +10,7 @@ import sys
 
 
 #criar conexão com bancdo de dados diretamente na banco de dados biblioteca
-def create_db_connection( user_name, user_password,host_name = 'localhost', database = 'biblioteca', port = 3306):
+def create_db_connection(user_name = 'root' ,host_name = 'localhost', database = 'biblioteca', port = 3306):
     connection = None
     try:
         connection = mysql.connector.connect(
@@ -36,9 +36,12 @@ def execute_query(connection,query,query_type):
         elif query_type == "READ":
             cursor.execute(query)
             results = cursor.fatchall
-        else: #CREATE
+        elif query_type == 'CREATE': 
             cursor.execute(query)
             print("Base de dados criada")
+        elif query_type == 'DROP':
+            cursor.execute(query)
+            print("Base de dados excluida")
             
     except Error as err:
         print(f'Não foi possível executar a ação, iformado erro: {err}') 
@@ -47,7 +50,7 @@ def execute_query(connection,query,query_type):
         sys.exit()
                
     cursor.close()
-    connection.close()
+    #connection.close()
     
 
 
