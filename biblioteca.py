@@ -1,4 +1,7 @@
+from datetime import datetime
+from multiprocessing.util import abstract_sockets_supported
 from queue import PriorityQueue
+from select import select
 from tkinter.tix import COLUMN
 import crud
 
@@ -10,7 +13,7 @@ connection = crud.create_db_connection()
 exit= False
 
 print(f'BEM VINDO {user} !!! \n')
-#"create table titles  (id int not null auto_increment primary key, title_name  varchar(100) not null, jp_title_name  varchar(100), author varchar(100), dig_physicist boolean not null, subject varchar(500));" 
+
 while exit == False:   
     print('MENU\nSelecione atraves dos números qual o tipo de operaçãos deseja realizar:\n')
     print(' 1 - Criar e excluir tabelas.\n 2 - Adicionar novo registro a tabela.\n 3 - Atualizar registro exitente.\n 4 - Remover registro.\n 5 - Sair\n')
@@ -20,6 +23,13 @@ while exit == False:
         insert_table = input ('como deseja incluir a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo\n')
         if insert_table == '1':
             db_structure = input ('Entre com o comando SQL:\n')
+            query_type = input('Qual ação vamos ralizar? \n1 - Criar \n2 - Excluir\n')
+
+            if query_type == '1':
+                query_type = 'CREATE'
+            elif query_type == '2':
+                query_type = 'DROP'
+
         elif insert_table == '2':  
             query_type = 'CREATE'          
             create_drop = input('Qual ação vamos ralizar? \n1 - Criar \n2 - Excluir\n' )  
@@ -60,12 +70,27 @@ while exit == False:
                 db_name = input('Qual tabela deseja excluir?\n')
                 db_structure = (f'DROP TABLE {db_name};') 
 
-        table = db_structure
-        print(table)
-        crud.execute_query(connection, table, query_type)
+        action = db_structure
 
     elif change == '2':
-        print('\n\n')
+        print('\n')
+        query_type = 'INSERT'
+        insert_table = input ('como deseja incluir a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo\n')
+        if insert_table == '1':
+            db_structure = input ('Entre com o comando SQL:\n')
+        elif insert_table == '2':
+            title_name = input('Qula o titulo da obra?')
+            original_name = input('Qual o titulo da obra na lingua de publicação')
+            author = input('Qual o autor desta obra?')
+            dig_phy = input('Eata obra é fisica?')
+            abstract = input('Conte um poco sobre esta obra:')
+            released_chaps = input('Quantos capitulos foram lançados desta obra?')
+            acquis_chaps = input ('Quantos capitulos você tem ?')
+            acquis_date = input ('Quando adquiriu este capitulo?')
+            register= datetime.datetime.today()
+
+            #action = (f"INSERT INTO `titles`(`title_name`, `original_name`, `author`, `dig_phy`, `abstract`, `released_chap´s`, \
+           #  `acquis_chap´s`, `acquis_date`, `register`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]')")
     elif change == '3':
         print('\n\n')
     elif change == '4':
@@ -74,4 +99,6 @@ while exit == False:
         exit = True
         print('\n\n')
         print(f'Até logo {user} !')
+
+    crud.execute_query(connection, action, query_type)
         

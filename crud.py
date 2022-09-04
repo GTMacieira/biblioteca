@@ -26,7 +26,7 @@ def create_db_connection(user_name = 'root' ,host_name = 'localhost', database =
     
     return connection
         
-def execute_query(connection,query,query_type):
+def execute_query(connection,query, query_type):
     cursor = connection.cursor()
     try:
         if query_type == "INSERT" or query_type == "DELETE" or query_type == "UPDATE":
@@ -42,7 +42,8 @@ def execute_query(connection,query,query_type):
         elif query_type == 'DROP':
             cursor.execute(query)
             print("Base de dados excluida")
-            
+        
+
     except Error as err:
         print(f'Não foi possível executar a ação, iformado erro: {err}') 
         cursor.close()
