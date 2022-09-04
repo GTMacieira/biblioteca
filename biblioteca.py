@@ -6,6 +6,7 @@ from tkinter.tix import COLUMN
 import crud
 
 #menu
+print(datetime.now())
 user = input('Entre com seu usuário:\n')
 
 connection = crud.create_db_connection()
@@ -68,7 +69,7 @@ while exit == False:
             elif create_drop == "2":
                 query_type = 'DROP'
                 db_name = input('Qual tabela deseja excluir?\n')
-                db_structure = (f'DROP TABLE {db_name};') 
+                action = (f'DROP TABLE {db_name};') 
 
         action = db_structure
 
@@ -77,20 +78,22 @@ while exit == False:
         query_type = 'INSERT'
         insert_table = input ('como deseja incluir a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo\n')
         if insert_table == '1':
-            db_structure = input ('Entre com o comando SQL:\n')
+            action = input ('Entre com o comando SQL:\n')
+            print(action)
         elif insert_table == '2':
-            title_name = input('Qula o titulo da obra?')
-            original_name = input('Qual o titulo da obra na lingua de publicação')
-            author = input('Qual o autor desta obra?')
-            dig_phy = input('Eata obra é fisica?')
-            abstract = input('Conte um poco sobre esta obra:')
-            released_chaps = input('Quantos capitulos foram lançados desta obra?')
-            acquis_chaps = input ('Quantos capitulos você tem ?')
-            acquis_date = input ('Quando adquiriu este capitulo?')
-            register= datetime.datetime.today()
+            title_name = input('Qula o titulo da obra?\n')#Goblin Slayer
+            original_name = input('Qual o titulo da obra na lingua de publicação\n')#ゴブリンスレイヤー
+            author = input('Qual o autor desta obra?\n')#Kagyuu Kumo
+            dig_phy = input('Eata obra é fisica?\n')#0
+            abstract = input('Conte um poco sobre esta obra:\n')#Um homem deseja tornar-se um "aventureiro", cujo lema é: "Eu não vou salvar o mundo, eu apenas vou matar goblins." Após ouvir rumores sobre ele, uma elfa se aproxima dele com um pedido.
+            released_chaps = int(input('Quantos capitulos foram lançados desta obra?\n'))#75
+            acquis_chaps = int(input ('Quantos capitulos você tem ?\n'))#10                     
+            acquis_date = input ('Quando adquiriu este capitulo?\n')#15-03-94
+            register= datetime.now()
 
-            #action = (f"INSERT INTO `titles`(`title_name`, `original_name`, `author`, `dig_phy`, `abstract`, `released_chap´s`, \
-           #  `acquis_chap´s`, `acquis_date`, `register`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]')")
+           #INSERT INTO `titles`(`title_name`, `original_name`, `author`, `dig_phy`, `abstract`, `acquis_date`, `released_chapters`, `acquis_chap´s`) VALUES ('Goblin Slayer','ゴブリンスレイヤー','Kagyuu Kumo','0','Um homem deseja tornar-se um "aventureiro", cujo lema é: "Eu não vou salvar o mundo, eu apenas vou matar goblins." Após ouvir rumores sobre ele, uma elfa se aproxima dele com um pedido.','15-03-1994',75,10)
+
+            action = (f"INSERT INTO `titles`(`title_name`, `original_name`, `author`, `dig_phy`, `abstract`, `released_chapters`,`acquis_chap´s`, `acquis_date`, `register`)VALUES ('{title_name}','{original_name}','{author}','{dig_phy}','{abstract}',{released_chaps},{acquis_chaps},'{acquis_date}','{register}')")
     elif change == '3':
         print('\n\n')
     elif change == '4':

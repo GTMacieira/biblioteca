@@ -26,12 +26,13 @@ def create_db_connection(user_name = 'root' ,host_name = 'localhost', database =
     
     return connection
         
+
 def execute_query(connection,query, query_type):
     cursor = connection.cursor()
     try:
         if query_type == "INSERT" or query_type == "DELETE" or query_type == "UPDATE":
             cursor.execute(query)
-            results = cursor.commit
+            connection.commit
             print(f"Alteração {query_type} realizada com sucesso!")
         elif query_type == "READ":
             cursor.execute(query)
