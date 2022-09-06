@@ -42,8 +42,7 @@ def execute_query(connection,query, query_type):
             print("Base de dados criada")
         elif query_type == 'DROP':
             cursor.execute(query)
-            print("Base de dados excluida")
-        
+            print("Base de dados excluida")        
 
     except Error as err:
         print(f'Não foi possível executar a ação, iformado erro: {err}') 

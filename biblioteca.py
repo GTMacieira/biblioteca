@@ -91,7 +91,7 @@ while exit == False:
             acquis_date = input ('Quando adquiriu este capitulo?\n')#15-03-94
             register= datetime.now()
 
-           #INSERT INTO `titles`(`title_name`, `original_name`, `author`, `dig_phy`, `abstract`, `acquis_date`, `released_chapters`, `acquis_chap´s`) VALUES ('Goblin Slayer','ゴブリンスレイヤー','Kagyuu Kumo','0','Um homem deseja tornar-se um "aventureiro", cujo lema é: "Eu não vou salvar o mundo, eu apenas vou matar goblins." Após ouvir rumores sobre ele, uma elfa se aproxima dele com um pedido.','15-03-1994',75,10)
+           #INSERT INTO `titles`(`title_name`, `original_name`, `author`, `dig_phy`, `abstract`, `acquis_date`, `released_chapters`, `acquis_chap´s`) VALUES ('Goblin Slayer','ゴブリンスレイヤー','Kagyuu Kumo','0','Um homem deseja tornar-se um "aventureiro", cujo lema é: "Eu não vou salvar o mundo, eu apenas vou matar goblins." Após ouvir rumores sobre ele, uma elfa se aproxima dele com um pedido.','15-03-1994',75,10);
 
             action = (f"INSERT INTO `titles`(`title_name`, `original_name`, `author`, `dig_phy`, `abstract`, `released_chapters`,`acquis_chap´s`, `acquis_date`, `register`)VALUES ('{title_name}','{original_name}','{author}','{dig_phy}','{abstract}',{released_chaps},{acquis_chaps},'{acquis_date}','{register}')")
     elif change == '3':
