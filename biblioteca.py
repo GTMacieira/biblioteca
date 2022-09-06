@@ -4,6 +4,7 @@ from queue import PriorityQueue
 from select import select
 from tkinter.tix import COLUMN
 import crud
+import sys
 
 #menu
 print(datetime.now())
@@ -102,6 +103,7 @@ while exit == False:
         exit = True
         print('\n\n')
         print(f'Até logo {user} !')
+        sys.exit()
 
     crud.execute_query(connection, action, query_type)
         

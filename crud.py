@@ -32,7 +32,7 @@ def execute_query(connection,query, query_type):
     try:
         if query_type == "INSERT" or query_type == "DELETE" or query_type == "UPDATE":
             cursor.execute(query)
-            connection.commit
+            connection.commit()
             print(f"Alteração {query_type} realizada com sucesso!")
         elif query_type == "READ":
             cursor.execute(query)
