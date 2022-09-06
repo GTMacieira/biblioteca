@@ -74,6 +74,7 @@ while exit == False:
 
         action = db_structure
 
+    #INSERT INTO `titles`(`title_name`, `original_name`, `author`, `dig_phy`, `abstract`, `acquis_date`, `released_chapters`, `acquis_chap´s`) VALUES ('Goblin Slayer','ゴブリンスレイヤー','Kagyuu Kumo','0','Um homem deseja tornar-se um "aventureiro", cujo lema é: "Eu não vou salvar o mundo, eu apenas vou matar goblins." Após ouvir rumores sobre ele, uma elfa se aproxima dele com um pedido.','15-03-1994',75,10);
     elif change == '2':
         print('\n')
         query_type = 'INSERT'
@@ -82,23 +83,71 @@ while exit == False:
             action = input ('Entre com o comando SQL:\n')
             print(action)
         elif insert_table == '2':
-            title_name = input('Qula o titulo da obra?\n')#Goblin Slayer
-            original_name = input('Qual o titulo da obra na lingua de publicação\n')#ゴブリンスレイヤー
-            author = input('Qual o autor desta obra?\n')#Kagyuu Kumo
-            dig_phy = input('Eata obra é fisica?\n')#0
-            abstract = input('Conte um poco sobre esta obra:\n')#Um homem deseja tornar-se um "aventureiro", cujo lema é: "Eu não vou salvar o mundo, eu apenas vou matar goblins." Após ouvir rumores sobre ele, uma elfa se aproxima dele com um pedido.
-            released_chaps = int(input('Quantos capitulos foram lançados desta obra?\n'))#75
-            acquis_chaps = int(input ('Quantos capitulos você tem ?\n'))#10                     
-            acquis_date = input ('Quando adquiriu este capitulo?\n')#15-03-94
+            title_name = input('Qula o titulo da obra?\n')
+            original_name = input('Qual o titulo da obra na lingua de publicação\n')
+            author = input('Qual o autor desta obra?\n')
+            dig_phy = input('Eata obra é fisica?\n')
+            abstract = input('Conte um poco sobre esta obra:\n')
+            released_chaps = int(input('Quantos capitulos foram lançados desta obra?\n'))
+            acquis_chaps = int(input ('Quantos capitulos você tem ?\n'))                   
+            acquis_date = input ('Quando adquiriu este capitulo?\n')
             register= datetime.now()
 
-           #INSERT INTO `titles`(`title_name`, `original_name`, `author`, `dig_phy`, `abstract`, `acquis_date`, `released_chapters`, `acquis_chap´s`) VALUES ('Goblin Slayer','ゴブリンスレイヤー','Kagyuu Kumo','0','Um homem deseja tornar-se um "aventureiro", cujo lema é: "Eu não vou salvar o mundo, eu apenas vou matar goblins." Após ouvir rumores sobre ele, uma elfa se aproxima dele com um pedido.','15-03-1994',75,10);
-
             action = (f"INSERT INTO `titles`(`title_name`, `original_name`, `author`, `dig_phy`, `abstract`, `released_chapters`,`acquis_chap´s`, `acquis_date`, `register`)VALUES ('{title_name}','{original_name}','{author}','{dig_phy}','{abstract}',{released_chaps},{acquis_chaps},'{acquis_date}','{register}')")
+    
+    #UPDATE Customers SET ContactName='Juan' WHERE Country='Mexico';
     elif change == '3':
-        print('\n\n')
+        print('\n')
+        query_type = 'UPDATE'
+        title_name = input('Qual titulo vamos alterar?')
+        insert_table = input ('como deseja incluir a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo\n')
+        if insert_table == '1':
+            action = input ('Entre com o comando SQL:\n')
+            print(action)
+        elif insert_table == '2':
+            title_name = input('Qual o titulo que devemos realizar a altereção?')
+            db_name = input('Qual o nome da tabela\n')
+            column_Update= input('Qual a o campo sará alterado?\n 1 - Titulo\n 2 - Nome original\n 3 - Autor\n 4 - Digital ou fisíco\n 5 - Resumo \n \
+                 6 - Data de aquisição \n 7 - Capitulos lançados \n 8 - Capitulos adquiridos') 
+            if column_Update == '1':
+                column_Update= 'title_name'
+            elif column_Update == '2':
+                column_Update= 'original_name'
+            elif column_Update == '3':
+                column_Update= 'uthor'
+            elif column_Update == '4':
+                column_Update= 'dig_phy'
+            elif column_Update == '5':
+                column_Update= 'abstract'
+            elif column_Update == '6':
+                column_Update= 'acquis_date'
+            elif column_Update == '7':
+                column_Update= 'released_chapters'
+            elif column_Update == '8':
+                column_Update= "acquis_chap´s"
+            
+            new_date = input('Qual novo valor do campo?')
+
+            action = (f'UPDATE {db_name} SET {column_Update}={new_date} WHERE title_name={title_name}')
+    
+    #DELETE FROM users WHERE id = %s
     elif change == '4':
-        print('\n\n')
+        print('\n')
+        query_type = 'DELETE'
+        insert_table = input ('como deseja incluir a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo\n')
+        if insert_table == '1':
+            action = input ('Entre com o comando SQL:\n')
+            print(action)
+        elif insert_table == '2':
+            db_name = input('Qual o nome da tabela\n')
+            title_name = input('Qual o titulo que devemos realizar a altereção?')
+            
+            
+            
+            new_date = input('Qual novo valor do campo?')
+
+            action = (f'DELETE FROM {db_name} WHERE id = %s')
+        
     elif change == '5':
         exit = True
         print('\n\n')
