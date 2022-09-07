@@ -1,15 +1,19 @@
 from datetime import datetime
+import imp
 from multiprocessing.util import abstract_sockets_supported
 from queue import PriorityQueue
 from select import select
 from tkinter.tix import COLUMN
 import crud
 import sys
+from functions import cls_term
+from colorama import Fore
+from colorama import Style
 
 #menu
-print(datetime.now())
+cls_term()
 user = input('Entre com seu usuário:\n')
-
+cls_term()
 connection = crud.create_db_connection()
  
 exit= False
@@ -18,23 +22,27 @@ print(f'BEM VINDO {user} !!! \n')
 
 while exit == False:   
     print('MENU\nSelecione atraves dos números qual o tipo de operaçãos deseja realizar:\n')
-    print(' 1 - Criar e excluir tabelas.\n 2 - Adicionar novo registro a tabela.\n 3 - Atualizar registro exitente.\n 4 - Remover registro.\n 5 - Sair\n')
+    print(Fore.YELLOW+' 1 - Criar e excluir tabelas.\n 2 - Adicionar novo registro a tabela.\n 3 - Atualizar registro exitente.\n 4 - Remover registro.\n 5 - Sair' + Style.RESET_ALL)
+    print('\n')
     change = input('Qual o procedimento devemos realizar?\n')
+    cls_term()
     
     if change == '1':        
-        insert_table = input ('como deseja incluir a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo\n')
+        insert_table = input (Fore.YELLOW+'como deseja incluir ou excluir a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo'+ Style.RESET_ALL)
         if insert_table == '1':
+            print('\n')
             db_structure = input ('Entre com o comando SQL:\n')
-            query_type = input('Qual ação vamos ralizar? \n1 - Criar \n2 - Excluir\n')
-
+            print('\n')
+            query_type = input(Fore.YELLOW+'Qual ação vamos ralizar? \n1 - Criar \n2 - Excluir'+ Style.RESET_ALL)
+            print('\n')
             if query_type == '1':
                 query_type = 'CREATE'
             elif query_type == '2':
                 query_type = 'DROP'
-
+            cls_term()
         elif insert_table == '2':  
             query_type = 'CREATE'          
-            create_drop = input('Qual ação vamos ralizar? \n1 - Criar \n2 - Excluir\n' )  
+            create_drop = input(Fore.YELLOW+'Qual ação vamos ralizar? \n1 - Criar \n2 - Excluir\n'+ Style.RESET_ALL )  
 
             if create_drop == "1":
                 db_name = input('Qual será o nome de sua tabela?\n')
@@ -78,43 +86,42 @@ while exit == False:
     elif change == '2':
         print('\n')
         query_type = 'INSERT'
-        insert_table = input ('como deseja incluir a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo\n')
+        insert_table = input (Fore.YELLOW+'Como deseja incluir a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo\n'+ Style.RESET_ALL)
         if insert_table == '1':
             action = input ('Entre com o comando SQL:\n')
             print(action)
         elif insert_table == '2':
-            title_name = input('Qula o titulo da obra?\n')
-            original_name = input('Qual o titulo da obra na lingua de publicação\n')
-            author = input('Qual o autor desta obra?\n')
-            dig_phy = input('Eata obra é fisica?\n')
-            abstract = input('Conte um poco sobre esta obra:\n')
-            released_chaps = int(input('Quantos capitulos foram lançados desta obra?\n'))
-            acquis_chaps = int(input ('Quantos capitulos você tem ?\n'))                   
-            acquis_date = input ('Quando adquiriu este capitulo?\n')
+            title_name = input('Qual o titulo da obra?\n')
+            original_name = input('\nQual o titulo da obra na lingua de publicação?\n')
+            author = input('\nQual o autor desta obra?\n')
+            dig_phy = input('\nA obra está em formato fisico?\n')
+            abstract = input('\nConte um poco sobre esta obra:\n')
+            released_chaps = int(input('\nQuantos capitulos foram lançados desta obra?\n'))
+            acquis_chaps = int(input ('\nQuantos capitulos você tem ?\n'))                   
+            acquis_date = input ('\nQuando adquiriu este capitulo?\n')
+            user = user
             register= datetime.now()
 
-            action = (f"INSERT INTO `titles`(`title_name`, `original_name`, `author`, `dig_phy`, `abstract`, `released_chapters`,`acquis_chap´s`, `acquis_date`, `register`)VALUES ('{title_name}','{original_name}','{author}','{dig_phy}','{abstract}',{released_chaps},{acquis_chaps},'{acquis_date}','{register}')")
+            action = (f"INSERT INTO `titles`(`title_name`, `original_name`, `author`, `di_phy`, `abstract`, `released_chaps`,`acquis_chaps`, `acquis_date`, `user`, `register`)VALUES ('{title_name}','{original_name}','{author}','{dig_phy}','{abstract}',{released_chaps},{acquis_chaps},'{acquis_date}','{user}','{register}')")
     
-    #UPDATE Customers SET ContactName='Juan' WHERE Country='Mexico';
+    #UPDATE `titles` SET `original_name`='[value-3]' WHERE title_name='value-2';
     elif change == '3':
         print('\n')
         query_type = 'UPDATE'
-        title_name = input('Qual titulo vamos alterar?')
-        insert_table = input ('como deseja incluir a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo\n')
+        insert_table = input (Fore.YELLOW+'como deseja alterar a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo\n'+ Style.RESET_ALL)
         if insert_table == '1':
             action = input ('Entre com o comando SQL:\n')
             print(action)
         elif insert_table == '2':
-            title_name = input('Qual o titulo que devemos realizar a altereção?')
             db_name = input('Qual o nome da tabela\n')
-            column_Update= input('Qual a o campo sará alterado?\n 1 - Titulo\n 2 - Nome original\n 3 - Autor\n 4 - Digital ou fisíco\n 5 - Resumo \n \
-                 6 - Data de aquisição \n 7 - Capitulos lançados \n 8 - Capitulos adquiridos') 
+            title_name = input('Qual o titulo que devemos realizar a altereção?\n')
+            column_Update= input(Fore.YELLOW+'Qual a o campo sará alterado?\n 1 - Titulo\n 2 - Nome original\n 3 - Autor\n 4 - Digital ou fisíco\n 5 - Resumo \n 6 - Data de aquisição \n 7 - Capitulos lançados \n 8 - Capitulos adquiridos\n'+ Style.RESET_ALL) 
             if column_Update == '1':
                 column_Update= 'title_name'
             elif column_Update == '2':
                 column_Update= 'original_name'
             elif column_Update == '3':
-                column_Update= 'uthor'
+                column_Update= 'author'
             elif column_Update == '4':
                 column_Update= 'dig_phy'
             elif column_Update == '5':
@@ -127,30 +134,24 @@ while exit == False:
                 column_Update= "acquis_chap´s"
             
             new_date = input('Qual novo valor do campo?')
-
-            action = (f'UPDATE {db_name} SET {column_Update}={new_date} WHERE title_name={title_name}')
+            action = (f"UPDATE {db_name} SET {column_Update}='{new_date}' WHERE title_name='{title_name}'")
     
     #DELETE FROM users WHERE id = %s
     elif change == '4':
         print('\n')
         query_type = 'DELETE'
-        insert_table = input ('como deseja incluir a tabela no banco de dados? \n 1 - Comando SQL\n 2 - Modo interativo\n')
+        insert_table = input (Fore.YELLOW+'como deseja excluir dados da tabela? \n 1 - Comando SQL\n 2 - Modo interativo\n'+ Style.RESET_ALL)
         if insert_table == '1':
             action = input ('Entre com o comando SQL:\n')
             print(action)
         elif insert_table == '2':
             db_name = input('Qual o nome da tabela\n')
-            title_name = input('Qual o titulo que devemos realizar a altereção?')
-            
-            
-            
-            new_date = input('Qual novo valor do campo?')
-
-            action = (f'DELETE FROM {db_name} WHERE id = %s')
+            title_name = input('Qual o titulo que devemos excluir')               
+            action = (f"DELETE FROM {db_name} WHERE title_name = '{title_name}'")
         
     elif change == '5':
         exit = True
-        print('\n\n')
+        cls_term()
         print(f'Até logo {user} !')
         sys.exit()
 

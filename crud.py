@@ -7,6 +7,8 @@ import mysql.connector
 from mysql.connector import Error
 import datetime
 import sys
+from colorama import Fore
+from colorama import Style
 
 
 #criar conexão com bancdo de dados diretamente na banco de dados biblioteca
@@ -21,7 +23,7 @@ def create_db_connection(user_name = 'root' ,host_name = 'localhost', database =
         port =  port
         )
     except Error as err:
-        print(f'Não foi possivel criar uma conexão com o banco de dados, iformado erro: {err}')
+        print(Fore.LIGHTGREEN_EX + f'Não foi possivel criar uma conexão com o banco de dados, iformado erro: {err} \n\n' + Style.RESET_ALL)
         sys.exit()
     
     return connection
@@ -45,7 +47,7 @@ def execute_query(connection,query, query_type):
             print("Base de dados excluida")        
 
     except Error as err:
-        print(f'Não foi possível executar a ação, iformado erro: {err}') 
+        print(Fore.RED + f'Não foi possível executar a ação, iformado erro: {err}' + Style.RESET_ALL) 
         cursor.close()
         connection.close()
         sys.exit()
