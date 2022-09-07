@@ -9,7 +9,7 @@ import datetime
 import sys
 from colorama import Fore
 from colorama import Style
-
+from functions import *
 
 #criar conexão com bancdo de dados diretamente na banco de dados biblioteca
 def create_db_connection(user_name = 'root' ,host_name = 'localhost', database = 'biblioteca', port = 3306):
@@ -35,22 +35,27 @@ def execute_query(connection,query, query_type):
         if query_type == "INSERT" or query_type == "DELETE" or query_type == "UPDATE":
             cursor.execute(query)
             connection.commit()
-            print(f"Alteração {query_type} realizada com sucesso!")
+            print(Fore.GREEN+f"Alteração {query_type} realizada com sucesso!"+ Style.RESET_ALL)
         elif query_type == "READ":
             cursor.execute(query)
-            results = cursor.fatchall
+            results = cursor.fetchall()
+            for result in results:
+                print(result)
+            input('Preesione qualquer tecla para continuar')
+            cls_term()
         elif query_type == 'CREATE': 
             cursor.execute(query)
-            print("Base de dados criada")
+            print(Fore.GREEN+"Base de dados criada"+ Style.RESET_ALL)
         elif query_type == 'DROP':
             cursor.execute(query)
-            print("Base de dados excluida")        
+            print(Fore.GREEN+"Base de dados excluida"+ Style.RESET_ALL)        
 
     except Error as err:
         print(Fore.RED + f'Não foi possível executar a ação, iformado erro: {err}' + Style.RESET_ALL) 
         cursor.close()
         connection.close()
-        sys.exit()
+        cls_term
+        pass
                
     cursor.close()
     #connection.close()
